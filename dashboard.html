@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — Grammar Stories</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #B8A9D9;
+      --primary-dark: #9684C2;
+      --accent: #A8E6CF;
+      --secondary: #A8D0E6;
+      --bg: #FAF7F2;
+      --surface: #FFFFFF;
+      --text-primary: #3D3A4E;
+      --text-secondary: #8A8698;
+      --border: #EAE5DD;
+      --success: #A3D9A5;
+      --shadow-sm: 0 2px 8px rgba(61,58,78,0.06);
+      --shadow-md: 0 4px 16px rgba(61,58,78,0.08);
+      --shadow-lg: 0 10px 30px rgba(61,58,78,0.14);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 480px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg);
+      position: relative;
+      padding-bottom: 80px;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      background: radial-gradient(circle at 80% 0%, #F3EEFC 0%, #E8F6EF 70%);
+      padding: 52px 24px 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .header-blob {
+      position: absolute; border-radius: 50%;
+      filter: blur(40px); pointer-events: none;
+    }
+    .header-blob-1 {
+      width: 180px; height: 180px; background: var(--primary);
+      opacity: 0.20; top: -60px; right: -40px;
+    }
+    .header-blob-2 {
+      width: 120px; height: 120px; background: var(--accent);
+      opacity: 0.25; bottom: -20px; left: -20px;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 22px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .greeting-time {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 4px;
+      font-weight: 500;
+    }
+    .greeting-name {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      font-size: 24px;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+      margin-bottom: 3px;
+    }
+    .greeting-sub {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .avatar {
+      width: 48px; height: 48px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      font-size: 20px;
+      box-shadow: 0 8px 18px rgba(150,132,194,0.35);
+      flex-shrink: 0;
+    }
+
+    /* XP + Progress */
+    .stats-card {
+      background: white;
+      border-radius: 20px;
+      padding: 16px 18px;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      position: relative;
+      z-index: 2;
+    }
+    .xp-badge {
+      background: linear-gradient(135deg, #FFE9B3 0%, #FFD980 100%);
+      color: #8A6D1F;
+      padding: 7px 15px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+      flex-shrink: 0;
+      box-shadow: 0 4px 10px rgba(255,201,107,0.35);
+    }
+    .progress-wrap { flex: 1; }
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--text-secondary);
+      font-weight: 600;
+      margin-bottom: 7px;
+    }
+    .progress-track {
+      height: 9px;
+      background: #EFEAF5;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 100%);
+      border-radius: 999px;
+      transition: width 0.6s ease;
+    }
+
+    /* ── BODY ── */
+    .body { padding: 22px 20px; display: flex; flex-direction: column; gap: 26px; }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 13px;
+    }
+    .section-head h2 {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+    .see-all {
+      font-size: 12px;
+      color: var(--primary-dark);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    /* Continue Learning Card */
+    .continue-card {
+      background: linear-gradient(145deg, #9684C2 0%, #7C6BAA 100%);
+      border-radius: 24px;
+      padding: 22px;
+      box-shadow: 0 14px 32px rgba(124,107,170,0.40);
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    .continue-card:active { transform: scale(0.98); }
+    .continue-deco {
+      position: absolute;
+      width: 160px; height: 160px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      top: -70px; right: -50px;
+    }
+    .continue-chip {
+      background: rgba(255,255,255,0.22);
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      padding: 5px 11px;
+      border-radius: 8px;
+      display: inline-block;
+      text-transform: uppercase;
+      align-self: flex-start;
+    }
+    .continue-title {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      color: white;
+    }
+    .continue-sub { font-size: 12px; color: rgba(255,255,255,0.78); }
+    .continue-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 4px;
+    }
+    .continue-progress-track {
+      height: 6px;
+      background: rgba(255,255,255,0.22);
+      border-radius: 999px;
+      overflow: hidden;
+      flex: 1;
+      margin-right: 14px;
+    }
+    .continue-progress-fill {
+      height: 100%;
+      background: white;
+      border-radius: 999px;
+    }
+    .continue-btn {
+      background: white;
+      color: var(--primary-dark);
+      border: none;
+      border-radius: 13px;
+      padding: 11px 20px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      white-space: nowrap;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+      cursor: pointer;
+    }
+
+    /* No active lesson state */
+    .no-lesson-card {
+      background: white;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: var(--shadow-md);
+      text-align: center;
+    }
+    .no-lesson-card p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+    .btn-browse {
+      display: inline-block;
+      padding: 12px 28px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      border: none;
+      border-radius: 14px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(150,132,194,0.35);
+      text-decoration: none;
+    }
+
+    /* Grammar Categories */
+    .category-row { display: flex; gap: 11px; }
+    .category-card {
+      flex: 1;
+      background: white;
+      border-radius: 18px;
+      padding: 16px 8px;
+      text-align: center;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.2s ease;
+    }
+    .category-card:active { transform: scale(0.97); }
+    .category-icon {
+      width: 44px; height: 44px;
+      border-radius: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+    .category-name {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 10px;
+      color: var(--text-primary);
+      line-height: 1.3;
+    }
+    .category-count {
+      font-size: 10px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    /* Recent Lessons */
+    .lesson-item {
+      background: white;
+      border-radius: 18px;
+      padding: 15px 16px;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 11px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.2s ease;
+    }
+    .lesson-item:last-child { margin-bottom: 0; }
+    .lesson-item:active { transform: scale(0.98); }
+    .lesson-icon {
+      width: 46px; height: 46px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .lesson-info { flex: 1; }
+    .lesson-title {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--text-primary);
+      margin-bottom: 3px;
+    }
+    .lesson-meta {
+      font-size: 11px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+    .status-dot {
+      width: 9px; height: 9px;
+      border-radius: 999px;
+      flex-shrink: 0;
+    }
+
+    /* ── BOTTOM NAV ── */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 480px;
+      background: white;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-around;
+      padding: 12px 0 20px;
+      z-index: 100;
+    }
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .nav-item.active { color: var(--primary-dark); }
+    .nav-icon-box {
+      width: 32px; height: 32px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+    .nav-item.active .nav-icon-box { background: #EFEAF5; }
+
+    @media (max-width: 480px) {
+      body { padding: 0; }
+      .page { max-width: 100%; border-radius: 0; }
+      .bottom-nav { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-blob header-blob-1"></div>
+    <div class="header-blob header-blob-2"></div>
+
+    <div class="header-top">
+      <div>
+        <div class="greeting-time" id="greetingTime"></div>
+        <div class="greeting-name" id="greetingName"></div>
+        <div class="greeting-sub">Ready for today's story?</div>
+      </div>
+      <div class="avatar" id="avatar"></div>
+    </div>
+
+    <!-- XP + Progress -->
+    <div class="stats-card">
+      <div class="xp-badge" id="xpBadge">⭐ 0 XP</div>
+      <div class="progress-wrap">
+        <div class="progress-label">
+          <span>Overall Progress</span>
+          <span id="progressCount">0 / 9</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="body">
+
+    <!-- Continue Learning -->
+    <div>
+      <div class="section-head">
+        <h2>Continue Learning</h2>
+      </div>
+      <div id="continueLearning"></div>
+    </div>
+
+    <!-- Grammar Topics -->
+    <div>
+      <div class="section-head">
+        <h2>Grammar Topics</h2>
+        <a href="lessons.html" class="see-all">See all →</a>
+      </div>
+      <div class="category-row">
+        <a href="lessons.html?topic=present-simple" class="category-card">
+          <div class="category-icon" style="background:#EDE8F5;">✏️</div>
+          <div class="category-name">Present<br>Simple</div>
+          <div class="category-count" id="count-ps">0/3 done</div>
+        </a>
+        <a href="lessons.html?topic=past-simple" class="category-card">
+          <div class="category-icon" style="background:#DFF2EA;">📖</div>
+          <div class="category-name">Past<br>Simple</div>
+          <div class="category-count" id="count-past">0/3 done</div>
+        </a>
+        <a href="lessons.html?topic=present-continuous" class="category-card">
+          <div class="category-icon" style="background:#D6EAF5;">💬</div>
+          <div class="category-name">Present<br>Cont.</div>
+          <div class="category-count" id="count-pc">0/3 done</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Recent Lessons -->
+    <div>
+      <div class="section-head">
+        <h2>Recent Lessons</h2>
+        <a href="lessons.html" class="see-all">Browse all →</a>
+      </div>
+      <div id="recentLessons"></div>
+    </div>
+
+  </div><!-- /body -->
+
+</div><!-- /page -->
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <a href="dashboard.html" class="nav-item active">
+    <div class="nav-icon-box">🏠</div>Home
+  </a>
+  <a href="progress.html" class="nav-item">
+    <div class="nav-icon-box">📊</div>Progress
+  </a>
+  <a href="settings.html" class="nav-item">
+    <div class="nav-icon-box">⚙️</div>Settings
+  </a>
+</nav>
+
+<script>
+  // ── Redirect if no name ──
+  const userName = localStorage.getItem('gs_user_name');
+  if (!userName) window.location.href = 'onboarding.html';
+
+  // ── Greeting ──
+  const hour = new Date().getHours();
+  const timeGreeting = hour < 12 ? 'Good morning ☀️'
+    : hour < 17 ? 'Good afternoon 🌤️'
+    : 'Good evening 🌙';
+  document.getElementById('greetingTime').textContent = timeGreeting;
+  document.getElementById('greetingName').textContent = `Hi, ${userName} 👋`;
+  document.getElementById('avatar').textContent = userName.charAt(0).toUpperCase();
+
+  // ── Load progress from Local Storage ──
+  const progress = JSON.parse(localStorage.getItem('gs_progress') || '{}');
+  const totalXP = parseInt(localStorage.getItem('gs_xp') || '0');
+
+  // All lessons index
+  const allLessons = [
+    { id: 'morning-routine', title: 'Morning Routine', icon: '☕', iconBg: '#DFF2EA', topic: 'present-simple', topicLabel: 'Present Simple' },
+    { id: 'shopping',        title: 'Shopping',        icon: '🛍️', iconBg: '#EDE8F5', topic: 'present-simple', topicLabel: 'Present Simple' },
+    { id: 'at-school',       title: 'At School',       icon: '📚', iconBg: '#D6EAF5', topic: 'present-simple', topicLabel: 'Present Simple' },
+    { id: 'at-work',         title: 'At Work',         icon: '💼', iconBg: '#FFF3D6', topic: 'past-simple',    topicLabel: 'Past Simple' },
+    { id: 'weekend',         title: 'Weekend Activities', icon: '🏠', iconBg: '#EFEAF5', topic: 'past-simple', topicLabel: 'Past Simple' },
+    { id: 'chat-friends',    title: 'Chat with Friends',  icon: '💬', iconBg: '#DFF2EA', topic: 'past-simple', topicLabel: 'Past Simple' },
+    { id: 'family',          title: 'Family',          icon: '👨‍👩‍👧', iconBg: '#F3EEFC', topic: 'present-continuous', topicLabel: 'Present Continuous' },
+    { id: 'hobbies',         title: 'Hobbies',         icon: '🎨', iconBg: '#D6EAF5', topic: 'present-continuous', topicLabel: 'Present Continuous' },
+    { id: 'at-cafe',         title: 'At a Cafe',       icon: '☕', iconBg: '#FFF3D6', topic: 'present-continuous', topicLabel: 'Present Continuous' },
+  ];
+
+  // ── XP & Overall Progress ──
+  const completedLessons = allLessons.filter(l => progress[l.id]?.status === 'completed');
+  const completedCount = completedLessons.length;
+  const progressPct = Math.round((completedCount / allLessons.length) * 100);
+
+  document.getElementById('xpBadge').textContent = `⭐ ${totalXP} XP`;
+  document.getElementById('progressCount').textContent = `${completedCount} / ${allLessons.length}`;
+  document.getElementById('progressFill').style.width = progressPct + '%';
+
+  // ── Grammar Topic Counts ──
+  const psDone  = allLessons.filter(l => l.topic === 'present-simple' && progress[l.id]?.status === 'completed').length;
+  const pastDone = allLessons.filter(l => l.topic === 'past-simple'    && progress[l.id]?.status === 'completed').length;
+  const pcDone  = allLessons.filter(l => l.topic === 'present-continuous' && progress[l.id]?.status === 'completed').length;
+  document.getElementById('count-ps').textContent   = `${psDone}/3 done`;
+  document.getElementById('count-past').textContent = `${pastDone}/3 done`;
+  document.getElementById('count-pc').textContent   = `${pcDone}/3 done`;
+
+  // ── Continue Learning ──
+  const lastLessonId = localStorage.getItem('gs_last_lesson');
+  const inProgressLesson = allLessons.find(l =>
+    progress[l.id]?.status === 'in-progress' || l.id === lastLessonId
+  );
+  const nextLesson = allLessons.find(l => !progress[l.id] || progress[l.id].status === 'new');
+
+  const continueTarget = inProgressLesson || nextLesson;
+  const continueEl = document.getElementById('continueLearning');
+
+  if (continueTarget) {
+    const prog = progress[continueTarget.id];
+    const stepPct = prog?.step ? Math.round((prog.step / 5) * 100) : 0;
+    const chipLabel = prog?.status === 'in-progress' ? 'In Progress' : 'Start Here';
+    continueEl.innerHTML = `
+      <div class="continue-card" onclick="window.location.href='lesson-detail.html?id=${continueTarget.id}'">
+        <div class="continue-deco"></div>
+        <div class="continue-chip">${chipLabel}</div>
+        <div class="continue-title">${continueTarget.title} ${continueTarget.icon}</div>
+        <div class="continue-sub">${continueTarget.topicLabel}</div>
+        <div class="continue-bottom">
+          <div class="continue-progress-track">
+            <div class="continue-progress-fill" style="width:${stepPct}%"></div>
+          </div>
+          <button class="continue-btn">Continue →</button>
+        </div>
+      </div>`;
+  } else {
+    continueEl.innerHTML = `
+      <div class="no-lesson-card">
+        <p>🎉 Amazing! You've completed all lessons.<br>Feel free to review any story again.</p>
+        <a href="lessons.html" class="btn-browse">Browse All Lessons</a>
+      </div>`;
+  }
+
+  // ── Recent Lessons (last 3 opened) ──
+  const recentEl = document.getElementById('recentLessons');
+  const recentIds = JSON.parse(localStorage.getItem('gs_recent') || '[]');
+  const recentList = recentIds.length > 0
+    ? recentIds.map(id => allLessons.find(l => l.id === id)).filter(Boolean)
+    : allLessons.slice(0, 3);
+
+  recentList.slice(0, 3).forEach(lesson => {
+    const st = progress[lesson.id]?.status || 'new';
+    const dotColor = st === 'completed' ? '#A3D9A5' : st === 'in-progress' ? '#FCC96B' : '#EAE5DD';
+    const metaText = st === 'completed'
+      ? `${lesson.topicLabel} · Score ${progress[lesson.id]?.score ?? '-'}/5`
+      : st === 'in-progress' ? `${lesson.topicLabel} · In progress`
+      : lesson.topicLabel;
+
+    recentEl.innerHTML += `
+      <a href="lesson-detail.html?id=${lesson.id}" class="lesson-item">
+        <div class="lesson-icon" style="background:${lesson.iconBg}">${lesson.icon}</div>
+        <div class="lesson-info">
+          <div class="lesson-title">${lesson.title}</div>
+          <div class="lesson-meta">${metaText}</div>
+        </div>
+        <div class="status-dot" style="background:${dotColor}"></div>
+      </a>`;
+  });
+</script>
+
+</body>
+</html>
