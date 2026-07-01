@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grammar Stories</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #B8A9D9;
+      --primary-dark: #9684C2;
+      --accent: #A8E6CF;
+      --secondary: #A8D0E6;
+      --bg: #FAF7F2;
+      --text-primary: #3D3A4E;
+      --text-secondary: #8A8698;
+      --border: #EAE5DD;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .splash-container {
+      width: 100%;
+      max-width: 400px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 48px 32px;
+      background: radial-gradient(circle at 30% 20%, #F3EEFC 0%, #E8F6EF 50%, #E1F0FA 100%);
+      border-radius: 40px;
+      overflow: hidden;
+    }
+
+    /* Decorative blobs */
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(40px);
+      opacity: 0.6;
+      pointer-events: none;
+    }
+    .blob-1 {
+      width: 200px; height: 200px;
+      background: var(--accent);
+      top: -60px; left: -60px;
+    }
+    .blob-2 {
+      width: 160px; height: 160px;
+      background: var(--secondary);
+      bottom: 60px; right: -40px;
+    }
+    .blob-3 {
+      width: 100px; height: 100px;
+      background: var(--primary);
+      top: 40%; left: -20px;
+      opacity: 0.3;
+    }
+
+    /* Illustration box */
+    .illustration {
+      width: 160px;
+      height: 160px;
+      background: white;
+      border-radius: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 72px;
+      box-shadow: 0 20px 48px rgba(150, 132, 194, 0.25);
+      margin-bottom: 36px;
+      position: relative;
+      z-index: 2;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
+
+    /* App name */
+    h1 {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      font-size: 32px;
+      color: var(--text-primary);
+      text-align: center;
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Tagline */
+    .tagline {
+      font-size: 15px;
+      color: var(--text-secondary);
+      text-align: center;
+      line-height: 1.6;
+      margin-bottom: 48px;
+      max-width: 260px;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Progress dots */
+    .dots {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 24px;
+      position: relative;
+      z-index: 2;
+    }
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(150, 132, 194, 0.25);
+      transition: all 0.3s ease;
+    }
+    .dot.active {
+      background: var(--primary-dark);
+      width: 20px;
+    }
+
+    /* CTA Button */
+    .btn-start {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      border: none;
+      border-radius: 18px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 12px 28px rgba(150, 132, 194, 0.45);
+      position: relative;
+      z-index: 2;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn-start:active {
+      transform: scale(0.98);
+      box-shadow: 0 6px 16px rgba(150, 132, 194, 0.35);
+    }
+
+    /* Description below button */
+    .desc {
+      margin-top: 20px;
+      font-size: 12px;
+      color: var(--text-secondary);
+      text-align: center;
+      line-height: 1.7;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Responsive — full screen on mobile */
+    @media (max-width: 480px) {
+      body {
+        padding: 0;
+        background: radial-gradient(circle at 30% 20%, #F3EEFC 0%, #E8F6EF 50%, #E1F0FA 100%);
+      }
+      .splash-container {
+        border-radius: 0;
+        min-height: 100vh;
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="splash-container">
+    <!-- Decorative blobs -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <!-- Illustration -->
+    <div class="illustration">📖</div>
+
+    <!-- App name -->
+    <h1>Grammar Stories</h1>
+
+    <!-- Tagline -->
+    <p class="tagline">Learn grammar naturally through everyday stories.</p>
+
+    <!-- Dots -->
+    <div class="dots">
+      <div class="dot active"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+
+    <!-- CTA -->
+    <button class="btn-start" onclick="handleStart()">Start Learning</button>
+
+    <!-- Desc -->
+    <p class="desc">Read short stories. Understand the grammar.<br>Practice for real life.</p>
+  </div>
+
+  <script>
+    // Check if user already has a name saved
+    function handleStart() {
+      const userName = localStorage.getItem('gs_user_name');
+      if (userName) {
+        // Already onboarded — go straight to Dashboard
+        window.location.href = 'dashboard.html';
+      } else {
+        // First time — go to Onboarding
+        window.location.href = 'onboarding.html';
+      }
+    }
+  </script>
+
+</body>
+</html>
