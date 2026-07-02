@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Progress — Grammar Stories</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #B8A9D9;
+      --primary-dark: #9684C2;
+      --accent: #A8E6CF;
+      --bg: #FAF7F2;
+      --surface: #FFFFFF;
+      --text-primary: #3D3A4E;
+      --text-secondary: #8A8698;
+      --border: #EAE5DD;
+      --success: #A3D9A5;
+      --shadow-sm: 0 2px 8px rgba(61,58,78,0.06);
+      --shadow-md: 0 4px 16px rgba(61,58,78,0.08);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+    }
+    .page {
+      width: 100%;
+      max-width: 480px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg);
+      padding-bottom: 90px;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      background: radial-gradient(circle at 80% 0%, #F3EEFC 0%, #E8F6EF 70%);
+      padding: 52px 24px 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .header-blob {
+      position: absolute; border-radius: 50%;
+      filter: blur(40px); pointer-events: none;
+    }
+    .header-blob-1 {
+      width: 160px; height: 160px; background: var(--primary);
+      opacity: 0.18; top: -50px; right: -30px;
+    }
+    .header-sub {
+      font-size: 13px; color: var(--text-secondary);
+      font-weight: 500; margin-bottom: 4px;
+      position: relative; z-index: 2;
+    }
+    .header h1 {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800; font-size: 21px;
+      color: var(--text-primary); line-height: 1.3;
+      position: relative; z-index: 2;
+    }
+
+    /* ── SUMMARY ROW ── */
+    .summary-row {
+      display: flex; gap: 11px;
+      padding: 20px 20px 4px;
+    }
+    .summary-card {
+      flex: 1; background: white;
+      border-radius: 20px; padding: 16px 10px;
+      box-shadow: var(--shadow-md); text-align: center;
+    }
+    .summary-num {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800; font-size: 24px;
+      color: var(--primary-dark);
+    }
+    .summary-label {
+      font-size: 10px; color: var(--text-secondary);
+      font-weight: 600; margin-top: 3px;
+    }
+
+    /* ── TOPIC CARDS ── */
+    .body { padding: 18px 20px; display: flex; flex-direction: column; gap: 14px; }
+
+    .topic-card {
+      background: white; border-radius: 22px;
+      padding: 18px 18px 16px; box-shadow: var(--shadow-md);
+    }
+    .topic-head {
+      display: flex; justify-content: space-between;
+      align-items: center; margin-bottom: 12px;
+    }
+    .topic-name {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700; font-size: 14px; color: var(--text-primary);
+    }
+    .topic-fraction {
+      font-size: 12px; color: var(--text-secondary); font-weight: 600;
+    }
+    .topic-track {
+      height: 9px; background: #EFEAF5;
+      border-radius: 999px; overflow: hidden; margin-bottom: 14px;
+    }
+    .topic-fill {
+      height: 100%; border-radius: 999px;
+      transition: width 0.6s ease;
+    }
+    .topic-fill.full    { background: linear-gradient(90deg, var(--success), #7DC981); }
+    .topic-fill.partial { background: linear-gradient(90deg, var(--primary), var(--primary-dark)); }
+    .topic-fill.empty   { width: 0%; }
+
+    .lesson-dots { display: flex; gap: 8px; }
+    .lesson-dot {
+      width: 36px; height: 36px; border-radius: 11px;
+      display: flex; align-items: center;
+      justify-content: center; font-size: 16px;
+      cursor: pointer; text-decoration: none;
+      transition: transform 0.15s ease;
+    }
+    .lesson-dot:active { transform: scale(0.93); }
+    .lesson-dot.done    { background: #EAF7EA; }
+    .lesson-dot.pending { background: #F4F2F7; opacity: 0.65; }
+
+    /* ── BOTTOM NAV ── */
+    .bottom-nav {
+      position: fixed; bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 100%; max-width: 480px;
+      background: white; border-top: 1px solid var(--border);
+      display: flex; justify-content: space-around;
+      padding: 12px 0 20px; z-index: 100;
+    }
+    .nav-item {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 4px;
+      font-size: 10px; font-weight: 700;
+      color: var(--text-secondary); text-decoration: none;
+    }
+    .nav-item.active { color: var(--primary-dark); }
+    .nav-icon-box {
+      width: 32px; height: 32px; border-radius: 10px;
+      display: flex; align-items: center;
+      justify-content: center; font-size: 18px;
+    }
+    .nav-item.active .nav-icon-box { background: #EFEAF5; }
+
+    @media (max-width: 480px) {
+      body { padding: 0; }
+      .page { max-width: 100%; }
+      .bottom-nav { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="header">
+    <div class="header-blob header-blob-1"></div>
+    <div class="header-sub">Your Journey</div>
+    <h1 id="headerTitle">Look how far you've come! 🌟</h1>
+  </div>
+
+  <div class="summary-row">
+    <div class="summary-card">
+      <div class="summary-num" id="statDone">0</div>
+      <div class="summary-label">Lessons Done</div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-num" id="statXP">0</div>
+      <div class="summary-label">Total XP</div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-num" id="statPct">0%</div>
+      <div class="summary-label">Completed</div>
+    </div>
+  </div>
+
+  <div class="body" id="topicBody"></div>
+
+</div>
+
+<nav class="bottom-nav">
+  <a href="dashboard.html" class="nav-item">
+    <div class="nav-icon-box">🏠</div>Home
+  </a>
+  <a href="progress.html" class="nav-item active">
+    <div class="nav-icon-box">📊</div>Progress
+  </a>
+  <a href="settings.html" class="nav-item">
+    <div class="nav-icon-box">⚙️</div>Settings
+  </a>
+</nav>
+
+<script>
+  // Redirect if no user
+  const userName = localStorage.getItem('gs_user_name');
+  if (!userName) window.location.href = 'onboarding.html';
+
+  // Personalise header
+  document.getElementById('headerTitle').textContent =
+    `Look how far you've come, ${userName}! 🌟`;
+
+  const progress = JSON.parse(localStorage.getItem('gs_progress') || '{}');
+  const totalXP  = parseInt(localStorage.getItem('gs_xp') || '0');
+
+  // Lesson index per topic
+  const topics = [
+    {
+      id: 'present-simple',
+      name: '✏️ Present Simple',
+      lessons: [
+        { id: 'morning-routine', icon: '☕' },
+        { id: 'shopping',        icon: '🛍️' },
+        { id: 'at-school',       icon: '📚' }
+      ]
+    },
+    {
+      id: 'past-simple',
+      name: '📖 Past Simple',
+      lessons: [
+        { id: 'at-work',      icon: '💼' },
+        { id: 'weekend',      icon: '🏠' },
+        { id: 'chat-friends', icon: '💬' }
+      ]
+    },
+    {
+      id: 'present-continuous',
+      name: '💬 Present Continuous',
+      lessons: [
+        { id: 'family',   icon: '👨‍👩‍👧' },
+        { id: 'hobbies',  icon: '🎨' },
+        { id: 'at-cafe',  icon: '☕' }
+      ]
+    }
+  ];
+
+  // Overall stats
+  const allIds   = topics.flatMap(t => t.lessons.map(l => l.id));
+  const doneCnt  = allIds.filter(id => progress[id]?.status === 'completed').length;
+  const pct      = Math.round((doneCnt / allIds.length) * 100);
+
+  document.getElementById('statDone').textContent = doneCnt;
+  document.getElementById('statXP').textContent   = totalXP;
+  document.getElementById('statPct').textContent  = pct + '%';
+
+  // Render topic cards
+  const body = document.getElementById('topicBody');
+  topics.forEach(topic => {
+    const topicDone = topic.lessons.filter(l => progress[l.id]?.status === 'completed').length;
+    const topicPct  = Math.round((topicDone / topic.lessons.length) * 100);
+    const fillClass = topicPct === 100 ? 'full' : topicPct > 0 ? 'partial' : 'empty';
+
+    const dots = topic.lessons.map(l => {
+      const done = progress[l.id]?.status === 'completed';
+      return `<a href="lesson-detail.html?id=${l.id}" class="lesson-dot ${done ? 'done' : 'pending'}" title="${l.id}">${l.icon}</a>`;
+    }).join('');
+
+    body.innerHTML += `
+      <div class="topic-card">
+        <div class="topic-head">
+          <span class="topic-name">${topic.name}</span>
+          <span class="topic-fraction">${topicDone} / ${topic.lessons.length}</span>
+        </div>
+        <div class="topic-track">
+          <div class="topic-fill ${fillClass}" style="width:${topicPct}%"></div>
+        </div>
+        <div class="lesson-dots">${dots}</div>
+      </div>`;
+  });
+</script>
+
+</body>
+</html>
