@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lessons — Grammar Stories</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #B8A9D9;
+      --primary-dark: #9684C2;
+      --accent: #A8E6CF;
+      --bg: #FAF7F2;
+      --surface: #FFFFFF;
+      --text-primary: #3D3A4E;
+      --text-secondary: #8A8698;
+      --border: #EAE5DD;
+      --success: #A3D9A5;
+      --shadow-sm: 0 2px 8px rgba(61,58,78,0.06);
+      --shadow-md: 0 4px 16px rgba(61,58,78,0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 480px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg);
+      padding-bottom: 90px;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      background: radial-gradient(circle at 80% 0%, #F3EEFC 0%, #E8F6EF 70%);
+      padding: 52px 24px 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .header-blob {
+      position: absolute; border-radius: 50%;
+      filter: blur(40px); pointer-events: none;
+    }
+    .header-blob-1 {
+      width: 160px; height: 160px; background: var(--primary);
+      opacity: 0.18; top: -50px; right: -30px;
+    }
+    .header-sub {
+      font-size: 13px;
+      color: var(--text-secondary);
+      font-weight: 500;
+      margin-bottom: 4px;
+      position: relative; z-index: 2;
+    }
+    .header h1 {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      font-size: 22px;
+      color: var(--text-primary);
+      line-height: 1.3;
+      position: relative; z-index: 2;
+    }
+
+    /* ── FILTER CHIPS ── */
+    .chip-row {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 16px 20px 6px;
+      scrollbar-width: none;
+    }
+    .chip-row::-webkit-scrollbar { display: none; }
+
+    .chip {
+      padding: 9px 18px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+      background: white;
+      border: 1.5px solid var(--border);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-sm);
+    }
+    .chip.active {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      border-color: transparent;
+      box-shadow: 0 6px 14px rgba(150,132,194,0.35);
+    }
+
+    /* ── LESSON LIST ── */
+    .lesson-list {
+      padding: 14px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+    }
+
+    .lesson-row {
+      background: white;
+      border-radius: 20px;
+      padding: 15px 16px;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.2s ease;
+    }
+    .lesson-row:active { transform: scale(0.98); }
+
+    .lesson-icon {
+      width: 48px; height: 48px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 23px;
+      flex-shrink: 0;
+    }
+
+    .lesson-info { flex: 1; }
+    .lesson-title {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--text-primary);
+      margin-bottom: 3px;
+    }
+    .lesson-meta {
+      font-size: 11px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .status-badge {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 5px 11px;
+      border-radius: 9px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .badge-done     { background: #EAF7EA; color: #2C7A39; }
+    .badge-progress { background: #FFF3D6; color: #8A6D1F; }
+    .badge-new      { background: #EFEAF5; color: #6B5B95; }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text-secondary);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    /* ── BOTTOM NAV ── */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 100%; max-width: 480px;
+      background: white;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-around;
+      padding: 12px 0 20px;
+      z-index: 100;
+    }
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-decoration: none;
+    }
+    .nav-item.active { color: var(--primary-dark); }
+    .nav-icon-box {
+      width: 32px; height: 32px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+    .nav-item.active .nav-icon-box { background: #EFEAF5; }
+
+    @media (max-width: 480px) {
+      body { padding: 0; }
+      .page { max-width: 100%; }
+      .bottom-nav { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-blob header-blob-1"></div>
+    <div class="header-sub">All Lessons</div>
+    <h1>What do you want<br>to learn today?</h1>
+  </div>
+
+  <!-- FILTER CHIPS -->
+  <div class="chip-row">
+    <button class="chip active" onclick="filterLessons('all', this)">All</button>
+    <button class="chip" onclick="filterLessons('present-simple', this)">Present Simple</button>
+    <button class="chip" onclick="filterLessons('past-simple', this)">Past Simple</button>
+    <button class="chip" onclick="filterLessons('present-continuous', this)">Present Continuous</button>
+  </div>
+
+  <!-- LESSON LIST -->
+  <div class="lesson-list" id="lessonList"></div>
+
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <a href="dashboard.html" class="nav-item">
+    <div class="nav-icon-box">🏠</div>Home
+  </a>
+  <a href="progress.html" class="nav-item">
+    <div class="nav-icon-box">📊</div>Progress
+  </a>
+  <a href="settings.html" class="nav-item">
+    <div class="nav-icon-box">⚙️</div>Settings
+  </a>
+</nav>
+
+<script>
+  // Redirect if no name
+  if (!localStorage.getItem('gs_user_name')) {
+    window.location.href = 'onboarding.html';
+  }
+
+  // All lessons data
+  const allLessons = [
+    { id: 'morning-routine', title: 'Morning Routine',    icon: '☕',   iconBg: '#DFF2EA', topic: 'present-simple',    topicLabel: 'Present Simple' },
+    { id: 'shopping',        title: 'Shopping',           icon: '🛍️',  iconBg: '#EDE8F5', topic: 'present-simple',    topicLabel: 'Present Simple' },
+    { id: 'at-school',       title: 'At School',          icon: '📚',   iconBg: '#D6EAF5', topic: 'present-simple',    topicLabel: 'Present Simple' },
+    { id: 'at-work',         title: 'At Work',            icon: '💼',   iconBg: '#FFF3D6', topic: 'past-simple',       topicLabel: 'Past Simple' },
+    { id: 'weekend',         title: 'Weekend Activities', icon: '🏠',   iconBg: '#EFEAF5', topic: 'past-simple',       topicLabel: 'Past Simple' },
+    { id: 'chat-friends',    title: 'Chat with Friends',  icon: '💬',   iconBg: '#DFF2EA', topic: 'past-simple',       topicLabel: 'Past Simple' },
+    { id: 'family',          title: 'Family',             icon: '👨‍👩‍👧', iconBg: '#F3EEFC', topic: 'present-continuous', topicLabel: 'Present Continuous' },
+    { id: 'hobbies',         title: 'Hobbies',            icon: '🎨',   iconBg: '#D6EAF5', topic: 'present-continuous', topicLabel: 'Present Continuous' },
+    { id: 'at-cafe',         title: 'At a Cafe',          icon: '☕',   iconBg: '#FFF3D6', topic: 'present-continuous', topicLabel: 'Present Continuous' },
+  ];
+
+  const progress = JSON.parse(localStorage.getItem('gs_progress') || '{}');
+
+  // Check URL param for topic filter
+  const urlTopic = new URLSearchParams(window.location.search).get('topic');
+  let currentFilter = urlTopic || 'all';
+
+  // Set active chip on load if URL has topic
+  if (urlTopic) {
+    document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+    document.querySelectorAll('.chip').forEach(c => {
+      if (c.getAttribute('onclick').includes(urlTopic)) c.classList.add('active');
+    });
+  }
+
+  function filterLessons(topic, el) {
+    currentFilter = topic;
+    document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+    renderLessons();
+  }
+
+  function renderLessons() {
+    const list = document.getElementById('lessonList');
+    const filtered = currentFilter === 'all'
+      ? allLessons
+      : allLessons.filter(l => l.topic === currentFilter);
+
+    if (filtered.length === 0) {
+      list.innerHTML = '<div class="empty-state">No lessons found.</div>';
+      return;
+    }
+
+    list.innerHTML = filtered.map(lesson => {
+      const st = progress[lesson.id]?.status || 'new';
+      const badgeClass = st === 'completed' ? 'badge-done'
+        : st === 'in-progress' ? 'badge-progress' : 'badge-new';
+      const badgeText = st === 'completed' ? '✓ Done'
+        : st === 'in-progress' ? 'In Progress' : 'New';
+
+      return `
+        <a href="lesson-detail.html?id=${lesson.id}" class="lesson-row">
+          <div class="lesson-icon" style="background:${lesson.iconBg}">${lesson.icon}</div>
+          <div class="lesson-info">
+            <div class="lesson-title">${lesson.title}</div>
+            <div class="lesson-meta">${lesson.topicLabel}</div>
+          </div>
+          <span class="status-badge ${badgeClass}">${badgeText}</span>
+        </a>`;
+    }).join('');
+  }
+
+  // Initial render
+  renderLessons();
+</script>
+
+</body>
+</html>
