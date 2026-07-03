@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings — Grammar Stories</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #B8A9D9;
+      --primary-dark: #9684C2;
+      --accent: #A8E6CF;
+      --bg: #FAF7F2;
+      --surface: #FFFFFF;
+      --text-primary: #3D3A4E;
+      --text-secondary: #8A8698;
+      --border: #EAE5DD;
+      --success: #A3D9A5;
+      --shadow-sm: 0 2px 8px rgba(61,58,78,0.06);
+      --shadow-md: 0 4px 16px rgba(61,58,78,0.08);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+    }
+    .page {
+      width: 100%;
+      max-width: 480px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg);
+      padding-bottom: 90px;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      background: radial-gradient(circle at 30% 0%, #F3EEFC 0%, #E8F6EF 70%);
+      padding: 60px 28px 36px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+    .header-blob {
+      position: absolute; border-radius: 50%;
+      filter: blur(40px); pointer-events: none;
+    }
+    .header-blob-1 {
+      width: 140px; height: 140px; background: var(--accent);
+      opacity: 0.22; bottom: -40px; right: -30px;
+    }
+    .header-blob-2 {
+      width: 100px; height: 100px; background: var(--primary);
+      opacity: 0.18; top: -20px; left: -20px;
+    }
+
+    .avatar {
+      width: 80px; height: 80px;
+      border-radius: 26px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800; font-size: 32px;
+      box-shadow: 0 12px 28px rgba(150,132,194,0.40);
+      position: relative; z-index: 2;
+    }
+    .user-name {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700; font-size: 20px;
+      color: var(--text-primary);
+      position: relative; z-index: 2;
+    }
+    .user-xp {
+      font-size: 13px; color: var(--text-secondary);
+      font-weight: 600; background: white;
+      padding: 6px 16px; border-radius: 999px;
+      box-shadow: var(--shadow-sm);
+      position: relative; z-index: 2;
+    }
+
+    /* ── BODY ── */
+    .body { padding: 28px 24px; display: flex; flex-direction: column; gap: 10px; }
+
+    .section-label {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--text-secondary); margin-bottom: 10px;
+      padding-left: 4px;
+    }
+
+    .edit-card {
+      background: white; border-radius: 22px;
+      padding: 22px 20px; box-shadow: var(--shadow-md);
+      display: flex; flex-direction: column; gap: 12px;
+    }
+
+    .field-label {
+      font-size: 11px; font-weight: 700;
+      color: var(--primary-dark);
+      letter-spacing: 0.05em; text-transform: uppercase;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 16px 18px;
+      background: var(--bg);
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px; font-weight: 600;
+      color: var(--text-primary);
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    input[type="text"]:focus {
+      border-color: var(--primary);
+      box-shadow: 0 4px 16px rgba(184,169,217,0.20);
+    }
+    input[type="text"].success-border {
+      border-color: var(--success);
+    }
+
+    .btn-save {
+      width: 100%; padding: 16px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white; border: none; border-radius: 16px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700; font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(150,132,194,0.35);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn-save:active {
+      transform: scale(0.98);
+      box-shadow: 0 4px 12px rgba(150,132,194,0.25);
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 100px; left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #3D3A4E; color: white;
+      padding: 13px 22px; border-radius: 14px;
+      font-size: 13px; font-weight: 600;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.20);
+      opacity: 0;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+      z-index: 200;
+      pointer-events: none;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ── BOTTOM NAV ── */
+    .bottom-nav {
+      position: fixed; bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 100%; max-width: 480px;
+      background: white; border-top: 1px solid var(--border);
+      display: flex; justify-content: space-around;
+      padding: 12px 0 20px; z-index: 100;
+    }
+    .nav-item {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 4px;
+      font-size: 10px; font-weight: 700;
+      color: var(--text-secondary); text-decoration: none;
+    }
+    .nav-item.active { color: var(--primary-dark); }
+    .nav-icon-box {
+      width: 32px; height: 32px; border-radius: 10px;
+      display: flex; align-items: center;
+      justify-content: center; font-size: 18px;
+    }
+    .nav-item.active .nav-icon-box { background: #EFEAF5; }
+
+    @media (max-width: 480px) {
+      body { padding: 0; }
+      .page { max-width: 100%; }
+      .bottom-nav { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-blob header-blob-1"></div>
+    <div class="header-blob header-blob-2"></div>
+    <div class="avatar" id="avatar">M</div>
+    <div class="user-name" id="userName">Mala</div>
+    <div class="user-xp" id="userXP">⭐ 0 XP earned</div>
+  </div>
+
+  <!-- BODY -->
+  <div class="body">
+    <div class="section-label">Account</div>
+    <div class="edit-card">
+      <div class="field-label">Your Name</div>
+      <input
+        type="text"
+        id="nameInput"
+        maxlength="30"
+        autocomplete="off"
+        autocorrect="off"
+        spellcheck="false"
+        placeholder="Enter your name"
+      >
+      <button class="btn-save" onclick="saveName()">Save Name</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- Toast notification -->
+<div class="toast" id="toast">✓ Name saved!</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <a href="dashboard.html" class="nav-item">
+    <div class="nav-icon-box">🏠</div>Home
+  </a>
+  <a href="progress.html" class="nav-item">
+    <div class="nav-icon-box">📊</div>Progress
+  </a>
+  <a href="settings.html" class="nav-item active">
+    <div class="nav-icon-box">⚙️</div>Settings
+  </a>
+</nav>
+
+<script>
+  // Redirect if no user
+  const currentName = localStorage.getItem('gs_user_name');
+  if (!currentName) window.location.href = 'onboarding.html';
+
+  // Populate header & input
+  const totalXP = parseInt(localStorage.getItem('gs_xp') || '0');
+  document.getElementById('avatar').textContent   = currentName.charAt(0).toUpperCase();
+  document.getElementById('userName').textContent = currentName;
+  document.getElementById('userXP').textContent   = `⭐ ${totalXP} XP earned`;
+  document.getElementById('nameInput').value       = currentName;
+
+  // Save name
+  function saveName() {
+    const input = document.getElementById('nameInput');
+    const newName = input.value.trim();
+
+    if (!newName || newName.length < 2) {
+      input.style.borderColor = '#F4A8A0';
+      input.focus();
+      setTimeout(() => input.style.borderColor = '', 1500);
+      return;
+    }
+
+    // Save to Local Storage
+    localStorage.setItem('gs_user_name', newName);
+
+    // Update header live
+    document.getElementById('avatar').textContent   = newName.charAt(0).toUpperCase();
+    document.getElementById('userName').textContent = newName;
+
+    // Add success border briefly
+    input.classList.add('success-border');
+    setTimeout(() => input.classList.remove('success-border'), 1500);
+
+    // Show toast
+    showToast('✓ Name saved!');
+  }
+
+  // Allow Enter key to save
+  document.getElementById('nameInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') saveName();
+  });
+
+  // Toast helper
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2500);
+  }
+</script>
+
+</body>
+</html>
