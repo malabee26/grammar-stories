@@ -680,4 +680,499 @@ const LESSONS_DATA = {
       {
         wrong: 'She go to the market every day.',
         correct: 'She goes to the market every day.',
-        reason: 'Subject "she/he/it" selalu butuh tambahan -s atau -es p
+        reason: 'Subject "she/he/it" selalu butuh tambahan -s atau -es pada verb.'
+      },
+      {
+        wrong: 'She doesn\'t goes to the market.',
+        correct: 'She doesn\'t go to the market.',
+        reason: 'Setelah "doesn\'t", verb selalu kembali ke bentuk dasar tanpa -s.'
+      }
+    ],
+    quiz: [
+      {
+        question: 'Rina ___ vegetables every week.',
+        blank: '___',
+        options: ['buy', 'buys', 'is buying', 'bought'],
+        correct: 1,
+        explanation: 'Subject "Rina" = she (orang ketiga tunggal) → verb + s = "buys". Signal word "every week" → Present Simple.'
+      },
+      {
+        question: 'She ___ a basket instead of a trolley.',
+        blank: '___',
+        options: ['take', 'is take', 'takes', 'taking'],
+        correct: 2,
+        explanation: '"She" → verb + s = "takes". Ini kebiasaan yang dilakukan berulang.'
+      },
+      {
+        question: '___ Rina usually shop on Saturdays?',
+        blank: '___',
+        options: ['Do', 'Is', 'Does', 'Has'],
+        correct: 2,
+        explanation: 'Untuk pertanyaan tentang she/he/it di Present Simple, gunakan "Does" di awal kalimat.'
+      },
+      {
+        question: 'We ___ to the market on weekends.',
+        blank: '___',
+        options: ['goes', 'is going', 'go', 'went'],
+        correct: 2,
+        explanation: '"We" → verb tanpa -s = "go". Tambahan -s hanya untuk he/she/it.'
+      },
+      {
+        question: 'My mom ___ fruits every week.',
+        blank: '___',
+        options: ["don't buy", "doesn't buy", "not buy", "doesn't buys"],
+        correct: 1,
+        explanation: '"My mom" = she → pakai "doesn\'t" + verb dasar "buy". Bukan "doesn\'t buys".'
+      }
+    ],
+    xpReward: 10,
+    nextLesson: 'at-school'
+  },
+
+  'at-school': {
+    id: 'at-school',
+    title: 'At School',
+    icon: '📚',
+    topic: 'Present Simple',
+    situation: 'Dimas is a university student. Every day he has a different schedule at campus.',
+    story: {
+      title: 'A Day at Campus',
+      text: 'Dimas <hl>wakes up</hl> at 7 AM every weekday. He <hl>takes</hl> the bus to campus because he <hl>doesn\'t have</hl> a motorcycle. His first class <hl>starts</hl> at 8 AM. He <hl>usually sits</hl> in the front row so he can focus.'
+    },
+    grammar: {
+      name: 'Present Simple',
+      explanation: 'Digunakan untuk rutinitas, kebiasaan, dan fakta umum. Dimas melakukan hal-hal ini setiap hari — bukan hanya hari ini.',
+      patterns: [
+        { label: '✅ Positive', value: 'Subject + Verb (s/es)' },
+        { label: '❌ Negative', value: 'Subject + don\'t / doesn\'t + Verb' },
+        { label: '❓ Question', value: 'Do / Does + Subject + Verb?' }
+      ],
+      signalWords: ['every day', 'every weekday', 'usually', 'always', 'often', 'sometimes']
+    },
+    examples: [
+      { sentence: 'He <hl>takes</hl> the bus every morning.', note: '→ Kebiasaan transportasi sehari-hari' },
+      { sentence: 'She <hl>doesn\'t bring</hl> lunch to school.', note: '→ Kebiasaan negatif' },
+      { sentence: '<hl>Does</hl> he <hl>study</hl> at night?', note: '→ Pertanyaan tentang rutinitas' },
+      { sentence: 'The class <hl>starts</hl> at 8 AM sharp.', note: '→ Fakta / jadwal tetap' }
+    ],
+    mistakes: [
+      {
+        wrong: 'He take the bus every day.',
+        correct: 'He takes the bus every day.',
+        reason: 'Subject "he/she/it" selalu butuh tambahan -s atau -es pada verb di Present Simple.'
+      },
+      {
+        wrong: 'He doesn\'t takes the bus.',
+        correct: 'He doesn\'t take the bus.',
+        reason: 'Setelah "doesn\'t", verb kembali ke bentuk dasar — tanpa -s/es.'
+      }
+    ],
+    quiz: [
+      {
+        question: 'Dimas ___ the bus every morning.',
+        blank: '___',
+        options: ['take', 'took', 'takes', 'is take'],
+        correct: 2,
+        explanation: '"Dimas" = he (orang ketiga tunggal) → verb + s = "takes". Signal word "every morning" → Present Simple.'
+      },
+      {
+        question: 'His class ___ at 8 AM.',
+        blank: '___',
+        options: ['start', 'starting', 'started', 'starts'],
+        correct: 3,
+        explanation: '"His class" = it → verb + s = "starts". Ini adalah fakta / jadwal tetap.'
+      },
+      {
+        question: '___ he usually sit in the front row?',
+        blank: '___',
+        options: ['Do', 'Is', 'Does', 'Did'],
+        correct: 2,
+        explanation: 'Untuk pertanyaan Present Simple dengan he/she/it, gunakan "Does" di depan kalimat.'
+      },
+      {
+        question: 'Students ___ hard before exams.',
+        blank: '___',
+        options: ['studies', 'is studying', 'study', 'studied'],
+        correct: 2,
+        explanation: '"Students" = they → verb tanpa -s = "study". Tambahan -s hanya untuk he/she/it.'
+      },
+      {
+        question: 'He ___ a motorcycle.',
+        blank: '___',
+        options: ["don't have", "doesn't has", "doesn't have", "not have"],
+        correct: 2,
+        explanation: '"He" → "doesn\'t" + verb dasar "have". Bukan "doesn\'t has" — setelah doesn\'t selalu verb dasar.'
+      }
+    ],
+    xpReward: 10,
+    nextLesson: 'at-work'
+  }
+};
+
+// ─────────────────────────────────────────
+//  APP STATE
+// ─────────────────────────────────────────
+const params   = new URLSearchParams(window.location.search);
+const lessonId = params.get('id') || 'morning-routine';
+const lesson   = LESSONS_DATA[lessonId];
+
+// Steps: 0=story, 1=grammar, 2=examples, 3=mistakes, 4=quiz
+let currentStep   = 0;
+let currentQ      = 0;
+let score         = 0;
+let answered      = false;
+const totalSteps  = 5;
+const totalQ      = lesson ? lesson.quiz.length : 5;
+
+// Redirect if no user
+if (!localStorage.getItem('gs_user_name')) {
+  window.location.href = 'onboarding.html';
+}
+
+// If lesson not found
+if (!lesson) {
+  document.getElementById('mainBody').innerHTML =
+    '<p style="padding:40px;color:#8A8698;text-align:center;">Lesson not found.<br><a href="lessons.html" style="color:#9684C2;">Back to lessons</a></p>';
+} else {
+  document.getElementById('lessonTitle').textContent = lesson.title + ' ' + lesson.icon;
+  updateStepBar();
+  renderStep();
+  markInProgress();
+}
+
+// ─────────────────────────────────────────
+//  STEP BAR
+// ─────────────────────────────────────────
+function updateStepBar() {
+  for (let i = 0; i < totalSteps; i++) {
+    const seg = document.getElementById('seg' + i);
+    seg.className = 'step-seg';
+    if (i < currentStep)      seg.classList.add('done');
+    else if (i === currentStep) seg.classList.add('active');
+  }
+  // Quiz dots vs step bar
+  if (currentStep === 4) {
+    document.getElementById('stepBar').classList.add('hidden');
+    document.getElementById('stepIndicator').textContent = `Q ${currentQ + 1} of ${totalQ}`;
+  } else {
+    document.getElementById('stepBar').classList.remove('hidden');
+    document.getElementById('stepIndicator').textContent = `Step ${currentStep + 1} of ${totalSteps}`;
+  }
+}
+
+// ─────────────────────────────────────────
+//  RENDER STEP
+// ─────────────────────────────────────────
+function renderStep() {
+  const body = document.getElementById('mainBody');
+  switch(currentStep) {
+    case 0: renderStory(body);    break;
+    case 1: renderGrammar(body);  break;
+    case 2: renderExamples(body); break;
+    case 3: renderMistakes(body); break;
+    case 4: renderQuiz(body);     break;
+  }
+}
+
+// ─────────────────────────────────────────
+//  STEP 0 — STORY
+// ─────────────────────────────────────────
+function renderStory(body) {
+  body.innerHTML = `
+    <div class="card">
+      <div class="card-label">📍 Situation</div>
+      <p>${lesson.situation}</p>
+    </div>
+    <div class="card">
+      <div class="card-label">📖 Story</div>
+      <h3>${lesson.story.title}</h3>
+      <p>${parseHL(lesson.story.text)}</p>
+    </div>
+    <button class="btn-full" onclick="nextStep()">Continue →</button>
+  `;
+}
+
+// ─────────────────────────────────────────
+//  STEP 1 — GRAMMAR
+// ─────────────────────────────────────────
+function renderGrammar(body) {
+  const patterns = lesson.grammar.patterns.map(p => `
+    <div class="pattern-row">
+      <span class="pattern-lbl">${p.label}</span>
+      <span class="pattern-val">${p.value}</span>
+    </div>`).join('');
+
+  const signals = lesson.grammar.signalWords.map(w =>
+    `<span class="signal-tag">${w}</span>`).join('');
+
+  body.innerHTML = `
+    <div class="card">
+      <div class="card-label">🎯 Grammar Focus</div>
+      <h3>${lesson.grammar.name}</h3>
+      <p>${lesson.grammar.explanation}</p>
+    </div>
+    <div class="card">
+      <div class="card-label">📐 Pattern</div>
+      <div class="pattern-box">${patterns}</div>
+    </div>
+    <div class="card">
+      <div class="card-label">🔑 Signal Words</div>
+      <div class="signal-row">${signals}</div>
+    </div>
+    <button class="btn-full" onclick="nextStep()">Continue →</button>
+  `;
+}
+  // ─────────────────────────────────────────
+//  STEP 2 — EXAMPLES
+// ─────────────────────────────────────────
+function renderExamples(body) {
+  const examples = lesson.examples.map(e => `
+    <div class="example-item">
+      <div class="example-sent">${parseHL(e.sentence)}</div>
+      <div class="example-note">${e.note}</div>
+    </div>`).join('');
+
+  body.innerHTML = `
+    <div class="card">
+      <div class="card-label">💬 Real-life Examples</div>
+      ${examples}
+    </div>
+    <button class="btn-full" onclick="nextStep()">Continue →</button>
+  `;
+}
+
+// ─────────────────────────────────────────
+//  STEP 3 — COMMON MISTAKES
+// ─────────────────────────────────────────
+function renderMistakes(body) {
+  const mistakes = lesson.mistakes.map((m, i) => `
+    ${i > 0 ? '<div class="divider"></div>' : ''}
+    <div class="mistake-block">
+      <div class="mistake-lbl" style="color:#C0584C;">✗ Wrong</div>
+      <div class="mistake-wrong">${m.wrong}</div>
+      <div class="mistake-lbl" style="color:#2C7A39;margin-top:6px;">✓ Correct</div>
+      <div class="mistake-correct"><strong>${m.correct}</strong></div>
+      <div class="mistake-reason">${m.reason}</div>
+    </div>`).join('');
+
+  body.innerHTML = `
+    <div class="card">
+      <div class="card-label">⚠️ Common Mistakes</div>
+      ${mistakes}
+    </div>
+    <button class="btn-full dark" onclick="nextStep()">Start Quiz →</button>
+  `;
+}
+
+// ─────────────────────────────────────────
+//  STEP 4 — QUIZ
+// ─────────────────────────────────────────
+function renderQuiz(body) {
+  answered = false;
+  const q = lesson.quiz[currentQ];
+
+  // Build dots
+  const dots = lesson.quiz.map((_, i) => {
+    let cls = 'q-dot';
+    if (i < currentQ) cls += ' done';
+    else if (i === currentQ) cls += ' active';
+    return `<div class="${cls}" id="qdot${i}"></div>`;
+  }).join('');
+
+  // Build options
+  const opts = q.options.map((opt, i) =>
+    `<button class="opt" id="opt${i}" onclick="selectAnswer(${i})">${opt}</button>`
+  ).join('');
+
+  // Replace blank in question
+  const qText = q.question.replace('___',
+    `<span class="q-blank" id="qBlank">______</span>`);
+
+  body.innerHTML = `
+    <div class="quiz-dots">${dots}</div>
+    <div class="question-card">
+      <div class="q-label">Question ${currentQ + 1}</div>
+      <div class="q-text">${qText}</div>
+    </div>
+    <div class="options">${opts}</div>
+    <div id="feedbackArea"></div>
+    <div id="nextBtnArea"></div>
+  `;
+
+  // Change back button to ✕ during quiz
+  document.getElementById('backBtn').textContent = '✕';
+  document.getElementById('backBtn').href = '#';
+  document.getElementById('backBtn').onclick = () => {
+    if (confirm('Exit quiz? Your progress in this quiz will be lost.')) {
+      window.location.href = 'lessons.html';
+    }
+  };
+}
+
+function selectAnswer(idx) {
+  if (answered) return;
+  answered = true;
+
+  const q = lesson.quiz[currentQ];
+  const isCorrect = idx === q.correct;
+  if (isCorrect) score++;
+
+  // Style options
+  document.querySelectorAll('.opt').forEach((btn, i) => {
+    if (i === idx && isCorrect)      btn.classList.add('selected-correct');
+    else if (i === idx && !isCorrect) btn.classList.add('selected-wrong');
+    else if (i === q.correct && !isCorrect) btn.classList.add('show-correct');
+    else btn.classList.add('dimmed');
+  });
+
+  // Fill blank
+  const blank = document.getElementById('qBlank');
+  if (blank) {
+    blank.textContent = q.options[q.correct];
+    blank.className = 'q-blank ' + (isCorrect ? 'correct' : 'wrong');
+  }
+
+  // Update dot
+  const dot = document.getElementById('qdot' + currentQ);
+  if (dot) {
+    dot.classList.remove('active');
+    dot.classList.add(isCorrect ? 'done' : 'wrong');
+  }
+
+  // Feedback
+  const fb = document.getElementById('feedbackArea');
+  fb.innerHTML = `
+    <div class="feedback-panel ${isCorrect ? 'correct' : 'wrong'}">
+      <div class="feedback-title">${isCorrect ? '✓ That\'s correct!' : 'Not quite — here\'s why'}</div>
+      <div class="feedback-text">${q.explanation}</div>
+    </div>`;
+
+  // Next button
+  const nb = document.getElementById('nextBtnArea');
+  const isLast = currentQ === totalQ - 1;
+  nb.innerHTML = `
+    <button class="btn-full dark" onclick="${isLast ? 'showResult()' : 'nextQuestion()'}">
+      ${isLast ? 'See Result →' : 'Next Question →'}
+    </button>`;
+}
+
+function nextQuestion() {
+  currentQ++;
+  updateStepBar();
+  renderQuiz(document.getElementById('mainBody'));
+}
+
+// ─────────────────────────────────────────
+//  RESULT
+// ─────────────────────────────────────────
+function showResult() {
+  const body = document.getElementById('mainBody');
+  document.getElementById('stepBar').classList.add('hidden');
+  document.getElementById('stepIndicator').textContent = 'Complete! 🎉';
+  document.getElementById('backBtn').textContent = '←';
+  document.getElementById('backBtn').href = 'lessons.html';
+  document.getElementById('backBtn').onclick = null;
+
+  // Save progress
+  saveProgress();
+
+  const totalXP   = parseInt(localStorage.getItem('gs_xp') || '0');
+  const progress  = JSON.parse(localStorage.getItem('gs_progress') || '{}');
+  const completed = Object.values(progress).filter(p => p.status === 'completed').length;
+  const pct       = Math.round((completed / 9) * 100);
+
+  const emoji = score >= 4 ? '🎉' : score >= 2 ? '👍' : '💪';
+  const nextLessonId = lesson.nextLesson;
+
+  body.innerHTML = `
+    <div class="result-hero">
+      <div class="result-emoji-box">${emoji}</div>
+      <div class="result-title">Story Complete!</div>
+      <div class="result-sub">You finished the ${lesson.title} story</div>
+      <div class="score-badge">
+        <div class="score-num">${score} / ${totalQ}</div>
+        <div class="score-lbl">Quiz Score</div>
+      </div>
+    </div>
+    <div class="xp-card">
+      <div class="xp-icon-box">⭐</div>
+      <div>
+        <div class="xp-gained">+${lesson.xpReward} XP earned!</div>
+        <div class="xp-total">Total XP: ${totalXP} XP</div>
+      </div>
+    </div>
+    <div class="progress-card">
+      <div class="progress-card-lbl">Overall Progress</div>
+      <div class="progress-track">
+        <div class="progress-fill" style="width:${pct}%"></div>
+      </div>
+      <div class="progress-info">
+        <span>${completed} of 9 lessons done</span>
+        <span>${pct}%</span>
+      </div>
+    </div>
+    <div class="result-actions">
+      <a href="dashboard.html" class="btn-outline">← Dashboard</a>
+      ${nextLessonId
+        ? `<button class="btn-full dark" onclick="window.location.href='lesson-detail.html?id=${nextLessonId}'">Next Story →</button>`
+        : `<button class="btn-full dark" onclick="window.location.href='lessons.html'">All Lessons</button>`}
+    </div>
+    ${nextLessonId ? `<div class="next-preview">Next: ${LESSONS_DATA[nextLessonId]?.title || ''}</div>` : ''}
+  `;
+}
+  // ─────────────────────────────────────────
+//  SAVE PROGRESS
+// ─────────────────────────────────────────
+function saveProgress() {
+  const progress = JSON.parse(localStorage.getItem('gs_progress') || '{}');
+  progress[lessonId] = {
+    status: 'completed',
+    score: score,
+    totalQuestions: totalQ,
+    lastAttemptDate: new Date().toISOString().split('T')[0]
+  };
+  localStorage.setItem('gs_progress', JSON.stringify(progress));
+
+  // Update XP
+  const oldXP = parseInt(localStorage.getItem('gs_xp') || '0');
+  localStorage.setItem('gs_xp', oldXP + lesson.xpReward);
+
+  // Update recent lessons
+  let recent = JSON.parse(localStorage.getItem('gs_recent') || '[]');
+  recent = [lessonId, ...recent.filter(id => id !== lessonId)].slice(0, 5);
+  localStorage.setItem('gs_recent', JSON.stringify(recent));
+
+  localStorage.removeItem('gs_last_lesson');
+}
+
+function markInProgress() {
+  const progress = JSON.parse(localStorage.getItem('gs_progress') || '{}');
+  if (!progress[lessonId] || progress[lessonId].status === 'new') {
+    progress[lessonId] = { status: 'in-progress', score: null, totalQuestions: totalQ };
+    localStorage.setItem('gs_progress', JSON.stringify(progress));
+  }
+  localStorage.setItem('gs_last_lesson', lessonId);
+
+  // Track recent
+  let recent = JSON.parse(localStorage.getItem('gs_recent') || '[]');
+  recent = [lessonId, ...recent.filter(id => id !== lessonId)].slice(0, 5);
+  localStorage.setItem('gs_recent', JSON.stringify(recent));
+}
+
+// ─────────────────────────────────────────
+//  HELPERS
+// ─────────────────────────────────────────
+function nextStep() {
+  currentStep++;
+  updateStepBar();
+  renderStep();
+  window.scrollTo(0, 0);
+}
+
+function parseHL(text) {
+  return text.replace(/<hl>(.*?)<\/hl>/g, '<span class="hl">$1</span>');
+}
+</script>
+
+</body>
+</html>
